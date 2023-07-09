@@ -1,14 +1,39 @@
-# Krypt - Web 3.0 Blockchain Application
-![Krypt](https://i.ibb.co/DVF4tNW/image.png)
+<h1 align="center">Krypt - Web-3.0-Blockchain-Application</h1>
 
-## Introduction
-This is a code repository for the corresponding video tutorial.
+### Description
+Krypt is a `Web3.0 blockchain application` that enables users to send transactions over the blockchain, with each transaction being permanently recorded on the blockchain.
 
-Using Web 3.0 methodologies, Solidity and Metamask you'll learn how to build a your first real Web 3.0 Application - from start to finish.
+### Demo / UI
+<img src = "https://i.ibb.co/DVF4tNW/image.png"/>
+  
+### Main Functionalities:
 
-Project created in collaboration with Enyel Sequeira: 
-Portfolio - https://www.enyelsequeira.com
-E-mail - enyelsequeira1994@gmail.com
-Want me to cover the project you've created? Send me an e-mail 👌
+ - Users can connect their MetaMask wallets to send ethereum through the blockchain.
+ - Each transaction will be paired with a gif and it will be forever stored on the blockchain.
+ - Users can access and view their latest transactions (and the gifs associated with them).
 
-## Launch your development career with project-based coaching - https://www.jsmastery.pro
+### Getting Started
+To get a local copy up and running follow these simple example steps.
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/prejin2310/Krypt---Web-3.0-Blockchain-Application.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm i
+   ```
+3. Start the app in development mode 
+   ```sh
+   npm run dev
+   ```
+
+### Built With
+- [Vite.js (react)](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Solidity](https://soliditylang.org/)
+- [Giphy API](https://developers.giphy.com/)
+- [Vercel](https://vercel.com/)
+
+### Reference
+* [Click Here](https://youtu.be/Wn_Kb3MR_cU))
