@@ -37,3 +37,5 @@ To get a local copy up and running follow these simple example steps.
 
 ### Reference
 * [Click Here](https://youtu.be/Wn_Kb3MR_cU))
+
+Note - Remember to make a .env file after cloning the project to store the API Key for the GIPHY (Watch the Youtube video)
