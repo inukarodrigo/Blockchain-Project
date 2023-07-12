@@ -51,6 +51,42 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
+.right-j{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.email-container{
+  display: flex;
+  gap: 3rem;
+  background-color: #7D3B87;
+  padding: 1rem 2rem;
+  border-radius: 16px;
+}
+
+.email-container>input{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #D9D9D9;
+}
+
+::placeholder{
+  color: #D9D9D9;
+}
+
+.btn-j {
+  background-color: #2952e3;
+  padding: 5px 26px;
+  margin-left: 4px;
+  border-radius: 9999px;
+}
+
+.btn-j:hover {
+  background-color: #2546bd;
+}
+
 /* white glassmorphism */
 .white-glassmorphism {
   background: rgba(255, 255, 255, 0.05);
