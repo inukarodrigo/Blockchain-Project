@@ -21,8 +21,9 @@ def get_wallet_details(wallet_address):
     data = response.json()['result']
 
     # Convert data to DataFrame
+    pd.set_option('display.max_columns', 20)
     df = pd.DataFrame(data)
-
+    df.head(10)
     # Convert 'from' and 'to' columns to lowercase strings
     df['from'] = df['from'].astype(str)
     df['to'] = df['to'].astype(str)
@@ -34,12 +35,23 @@ def get_wallet_details(wallet_address):
     df['from'] = df['from'].str.lower()
     df['to'] = df['to'].str.lower()
 
+    # Convert 'timestamp' column to numeric (integer) format
+    df['timestamp'] = df['timestamp'].astype(int)
+
+    # Filter out rows with invalid timestamps (e.g., non-numeric values)
+    df = df.dropna(subset=['timestamp'])
+
+    # Convert 'timestamp' column to datetime format (assuming it's in seconds since epoch)
+    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s', errors='coerce')
+
+    # Convert 'value' column to integers
+    df['value'] = df['value'].astype('int64')
+
     # Check the actual column names in the DataFrame
     print(df.columns)
-    print(df)
     # Filter transactions for the target account
     filtered_df = df.loc[(df['from'] == wallet_address.lower()) | (df['to'] == wallet_address.lower())]
-
+    print(filtered_df)
     # Calculate metrics
     # Convert 'timestamp' column to datetime format (assuming it's in seconds since epoch)
     df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s', errors='coerce')
@@ -47,18 +59,20 @@ def get_wallet_details(wallet_address):
     # Filter out rows with invalid timestamps (e.g., non-numeric values)
     df = df.dropna(subset=['timestamp'])
 
-    avg_min_between_sent_txns = (filtered_df[filtered_df['from'] == wallet_address]['timestamp'].diff() / 60).mean()
-    avg_min_between_received_txns = (filtered_df[filtered_df['to'] == wallet_address]['timestamp'].diff() / 60).mean()
-    time_diff_first_last = (filtered_df['timestamp'].max() - filtered_df['timestamp'].min()) / 60
-    sent_tnx = filtered_df[filtered_df['from'] == wallet_address].shape[0]
-    received_tnx = filtered_df[filtered_df['to'] == wallet_address].shape[0]
-    num_created_contracts = filtered_df[filtered_df['to'] == wallet_address]['iserror'].sum()
-    max_val_received = filtered_df[filtered_df['to'] == wallet_address]['value'].max() / 10**18  # Convert from Wei to Ether
-    avg_val_received = filtered_df[filtered_df['to'] == wallet_address]['value'].mean() / 10**18  # Convert from Wei to Ether
-    avg_val_sent = filtered_df[filtered_df['from'] == wallet_address]['value'].mean() / 10**18  # Convert from Wei to Ether
-    min_val_sent_to_contract = filtered_df[(filtered_df['from'] == wallet_address) & (filtered_df['iserror'] == '1')]['value'].min() / 10**18  # Convert from Wei to Ether
-    total_ether_sent = filtered_df[filtered_df['from'] == wallet_address]['value'].sum() / 10**18  # Convert from Wei to Ether
-    total_ether_received = filtered_df[filtered_df['to'] == wallet_address]['value'].sum() / 10**18  # Convert from Wei to Ether
+    avg_min_between_sent_txns = (
+                filtered_df[filtered_df['from'] == wallet_address.lower()]['timestamp'].diff() / pd.Timedelta(minutes=1)).mean()
+    avg_min_between_received_txns = (
+                filtered_df[filtered_df['to'] == wallet_address.lower()]['timestamp'].diff() / pd.Timedelta(minutes=1)).mean()
+    time_diff_first_last = (filtered_df['timestamp'].max() - filtered_df['timestamp'].min()) / pd.Timedelta(minutes=1)
+    sent_tnx = filtered_df[filtered_df['from'] == wallet_address.lower()].shape[0]
+    received_tnx = filtered_df[filtered_df['to'] == wallet_address.lower()].shape[0]
+    num_created_contracts = filtered_df[filtered_df['to'] == wallet_address.lower()]['iserror'].sum()
+    max_val_received = filtered_df[filtered_df['to'] == wallet_address.lower()]['value'].max() / 10**18  # Convert from Wei to Ether
+    avg_val_received = filtered_df[filtered_df['to'] == wallet_address.lower()]['value'].mean() / 10**18  # Convert from Wei to Ether
+    avg_val_sent = filtered_df[filtered_df['from'] == wallet_address.lower()]['value'].mean() / 10**18  # Convert from Wei to Ether
+    min_val_sent_to_contract = filtered_df[(filtered_df['from'] == wallet_address.lower()) & (filtered_df['iserror'] == '1')]['value'].min() / 10**18  # Convert from Wei to Ether
+    total_ether_sent = filtered_df[filtered_df['from'] == wallet_address.lower()]['value'].sum() / 10**18  # Convert from Wei to Ether
+    total_ether_received = filtered_df[filtered_df['to'] == wallet_address.lower()]['value'].sum() / 10**18  # Convert from Wei to Ether
 
     # Output details using print function
     print(f"Wallet Address: {wallet_address}")
