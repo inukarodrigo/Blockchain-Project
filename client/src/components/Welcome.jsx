@@ -33,10 +33,8 @@ const Welcome = () => {
     // Call the API to get wallet details using currentAccount
     try {
       const response = await axios.post("/send_transaction", { currentAccount });
-
-      // Process the response data as needed
+      // This data can be used to feed to the AI model
       console.log(response.data);
-      console.log(addressTo);
     } catch (error) {
       console.error("Error sending transaction:", error);
       // Handle error cases here
