@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
-
+import axios from "axios";
 import { TransactionContext } from "../context/TransactionContext";
 import { shortenAddress } from "../utils/shortenAddress";
 import { Loader } from ".";
@@ -22,8 +22,7 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 const Welcome = () => {
   const { currentAccount, connectWallet, handleChange, sendTransaction, formData, isLoading } = useContext(TransactionContext);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     const { addressTo, amount, keyword, message } = formData;
 
     e.preventDefault();
@@ -31,6 +30,17 @@ const Welcome = () => {
     if (!addressTo || !amount || !keyword || !message) return;
 
     sendTransaction();
+    // Call the API to get wallet details using currentAccount
+    try {
+      const response = await axios.post("/send_transaction", { currentAccount });
+
+      // Process the response data as needed
+      console.log(response.data);
+      console.log(addressTo);
+    } catch (error) {
+      console.error("Error sending transaction:", error);
+      // Handle error cases here
+    }
   };
 
   return (

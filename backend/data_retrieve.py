@@ -74,6 +74,8 @@ def get_wallet_details(wallet_address):
     total_ether_sent = filtered_df[filtered_df['from'] == wallet_address.lower()]['value'].sum() / 10**18  # Convert from Wei to Ether
     total_ether_received = filtered_df[filtered_df['to'] == wallet_address.lower()]['value'].sum() / 10**18  # Convert from Wei to Ether
 
+    return "Hello there"
+
     # Output details using print function
     print(f"Wallet Address: {wallet_address}")
     print(f"Avg min between sent tnx: {avg_min_between_sent_txns:.2f} minutes")
