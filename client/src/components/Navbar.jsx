@@ -1,29 +1,27 @@
 import React, { useRef } from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
-import emailjs from "@emailjs/browser";
 import logo from "../../images/logo.png";
 
 const NavBarItem = ({ title, classprops }) => (
   <li className={`mx-4 cursor-pointer ${classprops}`}>{title}</li>
 );
 
-const Navbar = () => {
+const Navbar = ({ onLogin }) => {
   const [toggleMenu, setToggleMenu] = React.useState(false);
   const form = useRef();
+  const [email, setEmail] = React.useState("");
 
-  // 1. Output of the AI model needs to be passed to this function
-  // 2. Based on the result of the model (1 or 0), the function has to decide if the email needs to be send or not
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    emailjs.sendForm("service_9d4gy53", "template_r3t69sp", form.current, "wORxbtBe_xIcUzQi7")
-      .then((result) => {
-        console.log(result.text);
-      }, (error) => {
-        console.log(error.text);
-      });
+  const handleChange = (event) => {
+    setEmail(event.target.value);
   };
+
+  const handleLoginClick = (e) => {
+    e.preventDefault(); // Prevent form submission and page refresh
+    // Call the parent component's onLogin function to pass the email
+    onLogin(email);
+  };
+
   return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
       <div className="md:flex-[0.5] flex-initial justify-center items-center">
@@ -31,9 +29,9 @@ const Navbar = () => {
       </div>
       <div className="right-j">
         <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-          <form ref={form} className="email-container" onSubmit={sendEmail}>
-            <input type="email" name="user_email" placeholder="Enter your Email address" />
-            <button className="btn btn-j">Login</button>
+          <form ref={form} className="email-container" onSubmit={handleLoginClick}>
+            <input type="email" name="user_email" placeholder="Enter your Email address" onChange={handleChange} />
+            <button className="btn btn-j" type="submit">Login</button>
           </form>
         </ul>
       </div>
