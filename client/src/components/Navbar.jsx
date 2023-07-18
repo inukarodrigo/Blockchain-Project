@@ -9,6 +9,7 @@ const NavBarItem = ({ title, classprops }) => (
 
 const Navbar = ({ onLogin }) => {
   const [toggleMenu, setToggleMenu] = React.useState(false);
+  const [showEmailContainer, setShowEmailContainer] = React.useState(true); // New state variable
   const form = useRef();
   const [email, setEmail] = React.useState("");
 
@@ -20,6 +21,7 @@ const Navbar = ({ onLogin }) => {
     e.preventDefault(); // Prevent form submission and page refresh
     // Call the parent component's onLogin function to pass the email
     onLogin(email);
+    setShowEmailContainer(false); // Hide the email container after clicking Login
   };
 
   return (
@@ -29,10 +31,14 @@ const Navbar = ({ onLogin }) => {
       </div>
       <div className="right-j">
         <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-          <form ref={form} className="email-container" onSubmit={handleLoginClick}>
-            <input type="email" name="user_email" placeholder="Enter your Email address" onChange={handleChange} />
-            <button className="btn btn-j" type="submit">Login</button>
-          </form>
+          {showEmailContainer && ( // Only show the email container if showEmailContainer is true
+            <form ref={form} className="email-container" onSubmit={handleLoginClick}>
+              <input type="email" name="user_email" placeholder="Enter your Email address" onChange={handleChange} />
+              <button className="btn btn-j" type="submit">
+                Login
+              </button>
+            </form>
+          )}
         </ul>
       </div>
       <div className="flex relative">
