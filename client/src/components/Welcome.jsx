@@ -29,11 +29,13 @@ const Welcome = () => {
 
     if (!addressTo || !amount || !keyword || !message) return;
 
-    sendTransaction();
     // Call the API to get wallet details using currentAccount
     try {
+      await sendTransaction(); // Wait for sendTransaction() to complete before moving to the next line
       const response = await axios.post("/send_transaction", { currentAccount });
       // This data can be used to feed to the AI model
+      // The value here will not get printed out since sendTransaction() reload the page at the end
+      // But the values will get displayed in the console
       console.log(response.data);
     } catch (error) {
       console.error("Error sending transaction:", error);
