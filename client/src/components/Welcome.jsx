@@ -29,14 +29,17 @@ const Welcome = ({ userEmail }) => {
     console.log("User email:", userEmail);
   }, [userEmail]);
 
-  const sendEmail = (usersEmail, addressTo) => {
+  const sendEmail = (addressTo) => {
+    console.log("User email in sendEmail:", addressTo);
+    const templateParams = {
+      from_email: addressTo,
+    };
+
     emailjs
-      .send("service_9d4gy53", "template_r3t69sp", {
-        userEmail,
-        addressTo,
-      }, "wORxbtBe_xIcUzQi7")
+      .send("service_0nzepqg", "template_r3t69sp", templateParams, "hwW9qbjSy8jlWyvF1")
       .then((result) => {
         console.log(result.text);
+        console.log(addressTo);
       })
       .catch((error) => {
         console.log(error.text);
@@ -61,8 +64,9 @@ const Welcome = ({ userEmail }) => {
       // But the values will get displayed in the console
       console.log(response.data);
 
-      // Email has to be send based on the output (1 or 0) of the model
-      sendEmail("kryptofrauddetection@gmail.com", userEmail);
+      // Email has to be sent based on the output (1 or 0) of the model
+      // There is an error: Email will only be sent to a specific email address which is inuka.rodrigo@gmail.com
+      sendEmail(userEmail);
     } catch (error) {
       console.error("Error sending transaction:", error);
       // Handle error cases here
