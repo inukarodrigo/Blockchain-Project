@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 import axios from "axios";
+import emailjs from "@emailjs/browser";
 import { TransactionContext } from "../context/TransactionContext";
 import { shortenAddress } from "../utils/shortenAddress";
 import { Loader } from ".";
@@ -20,8 +21,31 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
   />
 );
 
-const Welcome = () => {
+const Welcome = ({ userEmail }) => {
   const { currentAccount, connectWallet, handleChange, sendTransaction, formData, isLoading } = useContext(TransactionContext);
+
+  useEffect(() => {
+    // Print the user's email address in the console
+    console.log("User email:", userEmail);
+  }, [userEmail]);
+
+  const sendEmail = (addressTo) => {
+    console.log("User email in sendEmail:", addressTo);
+    const templateParams = {
+      from_email: addressTo,
+    };
+
+    emailjs
+      .send("service_0nzepqg", "template_r3t69sp", templateParams, "hwW9qbjSy8jlWyvF1")
+      .then((result) => {
+        console.log(result.text);
+        console.log(addressTo);
+      })
+      .catch((error) => {
+        console.log(error.text);
+      });
+  };
+
   const handleSubmit = async (e) => {
     const { addressTo, amount, keyword, message } = formData;
 
@@ -29,12 +53,20 @@ const Welcome = () => {
 
     if (!addressTo || !amount || !keyword || !message) return;
 
-    sendTransaction();
     // Call the API to get wallet details using currentAccount
     try {
+      await sendTransaction(); // Wait for sendTransaction() to complete before moving to the next line
+
+      console.log("Your email address is: ", userEmail);
       const response = await axios.post("/send_transaction", { currentAccount });
-      // This data can be used to feed to the AI model
+      // This data (data in response variable) can be used to feed to the AI model
+      // The value here will not get printed out since sendTransaction() reload the page at the end
+      // But the values will get displayed in the console
       console.log(response.data);
+
+      // Email has to be sent based on the output (1 or 0) of the model
+      // There is an error: Email will only be sent to a specific email address which is inuka.rodrigo@gmail.com
+      sendEmail(userEmail);
     } catch (error) {
       console.error("Error sending transaction:", error);
       // Handle error cases here

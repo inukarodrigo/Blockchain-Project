@@ -129,7 +129,8 @@ export const TransactionsProvider = ({ children }) => {
         const transactionsCount = await transactionsContract.getTransactionCount();
 
         setTransactionCount(transactionsCount.toNumber());
-        window.location.reload();
+        // Don't uncomment this, it will not send the email
+        // window.location.reload();
       } else {
         console.log("No ethereum object");
       }
