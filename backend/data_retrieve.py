@@ -90,6 +90,12 @@ def get_wallet_details(wallet_address):
     # Calculate ether balance
     ether_balance = total_ether_received - total_ether_sent
 
+    # Calculate total unique addresses from which the account received transactions
+    total_unique_received_from_addresses = filtered_df[filtered_df['to'] == wallet_address.lower()]['from'].nunique()
+
+    # Calculate the total number of transactions (including transactions to create contracts)
+    total_transactions = filtered_df.shape[0]
+
     # Output details using print function
     print(f"Wallet Address: {wallet_address}")
     print(f"Avg min between sent tnx: {avg_min_between_sent_txns:.2f} minutes")
@@ -97,9 +103,11 @@ def get_wallet_details(wallet_address):
     print(f"Time Diff between first and last (Mins): {time_diff_first_last:.2f} minutes")
     print(f"Sent tnx: {sent_tnx}")
     print(f"Received Tnx: {received_tnx}")
+    print(f"Total Unique Addresses from which account received transactions: {total_unique_received_from_addresses}")
     print(f"Number of Created Contracts: {num_created_contracts}")
     print(f"Max value received: {max_val_received:.6f} Ether")
     print(f"Avg value received: {avg_val_received:.6f} Ether")
+    print(f"Total Transactions (including tnx to create contract): {total_transactions}")
     print(f"Avg value sent: {avg_val_sent:.6f} Ether")
     print(f"Min value sent to contract: {min_val_sent_to_contract:.6f} Ether")
     print(f"Total Ether sent: {total_ether_sent:.6f} Ether")
@@ -114,9 +122,11 @@ def get_wallet_details(wallet_address):
         "Time_Diff_between_first_and_last(Mins)": time_diff_first_last,
         "Sent_tnx": sent_tnx,
         "Received_tnx": received_tnx,
+        "Total_Unique_Addresses_Received_From": total_unique_received_from_addresses,
         "Number_of_Created_Contracts": num_created_contracts,
         "Max_Value_Received": max_val_received,
         "Avg_Value_Received": avg_val_received,
+        "Total_Transactions": total_transactions,
         "avg_val_sent": avg_val_sent,
         "total_ether_sent": total_ether_sent,
         "total_ether_received": total_ether_received,
@@ -132,5 +142,6 @@ def get_wallet_details(wallet_address):
 
 
 if __name__ == "__main__":
-    wallet_address = '0x4886635057704D03ab29541094e99Dca7C6A887C'
-    get_wallet_details(wallet_address)
+    wallet_address1 = '0x4886635057704D03ab29541094e99Dca7C6A887C'
+    wallet_address2 = '0xCeCDC9F411392133701Ac1e22Bddaa9167f7ca04'
+    get_wallet_details(wallet_address2)
