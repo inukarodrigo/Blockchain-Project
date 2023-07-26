@@ -102,10 +102,16 @@ def get_wallet_details(wallet_address):
 
     # Process ERC20 token transfer data and calculate additional metrics
     total_ERC20_tnxs = len(data_erc20)
-    ERC20_uniq_rec_addr = len(set(entry['from'] for entry in data_erc20))
-    ERC20_uniq_rec_contract_addr = len(set(entry['contractAddress'] for entry in data_erc20))
-    ERC20_min_val_rec = min(int(entry['value']) for entry in data_erc20) / 10 ** 18
-    ERC20_Uniq_Rec_Token_Name = len(set(entry['tokenSymbol'] for entry in data_erc20))
+    if data_erc20:
+        ERC20_uniq_rec_addr = len(set(entry['from'] for entry in data_erc20))
+        ERC20_uniq_rec_contract_addr = len(set(entry['contractAddress'] for entry in data_erc20))
+        ERC20_min_val_rec = min(int(entry['value']) for entry in data_erc20) / 10 ** 18
+        ERC20_Uniq_Rec_Token_Name = len(set(entry['tokenSymbol'] for entry in data_erc20))
+    else:
+        ERC20_uniq_rec_addr = 0
+        ERC20_uniq_rec_contract_addr = 0
+        ERC20_min_val_rec = 0
+        ERC20_Uniq_Rec_Token_Name = 0
 
     # Output details using print function
     print(f"Wallet Address: {wallet_address}")
