@@ -59,14 +59,15 @@ const Welcome = ({ userEmail }) => {
 
       console.log("Your email address is: ", userEmail);
       const response = await axios.post("/send_transaction", { currentAccount });
-      // This data (data in response variable) can be used to feed to the AI model
       // The value here will not get printed out since sendTransaction() reload the page at the end
       // But the values will get displayed in the console
       console.log(response.data);
 
       // Email has to be sent based on the output (1 or 0) of the model
       // There is an error: Email will only be sent to a specific email address which is inuka.rodrigo@gmail.com
-      sendEmail(userEmail);
+      if (response.data === 1) {
+        sendEmail(userEmail);
+      }
     } catch (error) {
       console.error("Error sending transaction:", error);
       // Handle error cases here

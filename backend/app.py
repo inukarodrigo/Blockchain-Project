@@ -16,7 +16,7 @@ def handle_send_transaction():
     model_result = predict_with_saved_model(pre_processed_wallet_information)
     print("Model result: ", model_result)
     # You can process the result as needed and return any response to the frontend
-    return jsonify(model_result), 200
+    return jsonify(int(model_result)), 200
 
 
 # Serve the React frontend
