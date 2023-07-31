@@ -3,13 +3,14 @@
 ### Description
 CryptoNex is a `Web3.0 blockchain application` that enables users to send transactions over the blockchain, with each transaction being permanently recorded on the blockchain.
 
-### Demo / UI
+## Screenshots
+#### Demo / UI
 ![Demo / UI](Screenshots/Front_Page.png)
 
-### Latest Transactions
+#### Latest Transactions
 ![Latest Transactions](Screenshots/Latest_Transactions.png)
 
-### Email Alert (If the transaction is fraudulent)
+#### Email Alert (If the transaction is fraudulent)
 ![Fraud Email](Screenshots/Fraud_Email.png)
 
 
