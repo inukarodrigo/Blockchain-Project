@@ -31,9 +31,13 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm i
    ```
-3. Start the app in development mode 
+3. Change the directory
    ```sh
-   npm run dev
+   cd backend
+   ```
+4. Start the app in development mode 
+   ```sh
+   python app.py
    ```
 
 ### Built With
@@ -42,5 +46,8 @@ To get a local copy up and running follow these simple example steps.
 - [Solidity](https://soliditylang.org/)
 - [Giphy API](https://developers.giphy.com/)
 - [Vercel](https://vercel.com/)
+- [Flask](https://flask.palletsprojects.com/en/2.3.x/)
+- [Python](https://www.python.org/)
+- [Jupyter Notebook](https://jupyter.org/)
 
 Note - Remember to make a .env file after cloning the project to store the API Key for the GIPHY
