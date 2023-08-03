@@ -3,9 +3,17 @@
 ### Description
 CryptoNex is a `Web3.0 blockchain application` that enables users to send transactions over the blockchain, with each transaction being permanently recorded on the blockchain.
 
-### Demo / UI
-<img src = "https://i.ibb.co/DVF4tNW/image.png"/>
-  
+## Screenshots
+#### Demo / UI
+![Demo / UI](Screenshots/Front_Page.png)
+
+#### Latest Transactions
+![Latest Transactions](Screenshots/Latest_Transactions.png)
+
+#### Email Alert (If the transaction is fraudulent)
+![Fraud Email](Screenshots/Fraud_Email.png)
+
+
 ### Main Functionalities:
 
  - Users can connect their MetaMask wallets to send ethereum through the blockchain.
@@ -24,9 +32,13 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm i
    ```
-3. Start the app in development mode 
+3. Change the directory
    ```sh
-   npm run dev
+   cd backend
+   ```
+4. Start the app in development mode 
+   ```sh
+   python app.py
    ```
 
 ### Built With
@@ -35,8 +47,8 @@ To get a local copy up and running follow these simple example steps.
 - [Solidity](https://soliditylang.org/)
 - [Giphy API](https://developers.giphy.com/)
 - [Vercel](https://vercel.com/)
+- [Flask](https://flask.palletsprojects.com/en/2.3.x/)
+- [Python](https://www.python.org/)
+- [Jupyter Notebook](https://jupyter.org/)
 
-### Reference
-* [Click Here](https://youtu.be/Wn_Kb3MR_cU))
-
-Note - Remember to make a .env file after cloning the project to store the API Key for the GIPHY (Watch the Youtube video)
+Note - Remember to make a .env file after cloning the project to store the API Key for the GIPHY
