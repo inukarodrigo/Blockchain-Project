@@ -29,17 +29,32 @@ const Welcome = ({ userEmail }) => {
     console.log("User email:", userEmail);
   }, [userEmail]);
 
-  const sendEmail = (addressTo) => {
+  const sendFraudEmail = (addressTo) => {
     console.log("User email in sendEmail:", addressTo);
     const templateParams = {
-      from_email: addressTo,
+      to_email: addressTo,
     };
 
     emailjs
       .send("service_0nzepqg", "template_r3t69sp", templateParams, "hwW9qbjSy8jlWyvF1")
       .then((result) => {
         console.log(result.text);
-        console.log(addressTo);
+      })
+      .catch((error) => {
+        console.log(error.text);
+      });
+  };
+
+  const sendRegularEmail = (addressTo) => {
+    console.log("User email in sendEmail:", addressTo);
+    const templateParams = {
+      to_email: addressTo,
+    };
+
+    emailjs
+      .send("service_0nzepqg", "template_r6iz22i", templateParams, "hwW9qbjSy8jlWyvF1")
+      .then((result) => {
+        console.log(result.text);
       })
       .catch((error) => {
         console.log(error.text);
@@ -62,15 +77,14 @@ const Welcome = ({ userEmail }) => {
       // The value here will not get printed out since sendTransaction() reload the page at the end
       // But the values will get displayed in the console
       console.log(response.data);
-
       // Email has to be sent based on the output (1 or 0) of the model
-      // There is an error: Email will only be sent to a specific email address which is inuka.rodrigo@gmail.com
       if (response.data === 1) {
-        sendEmail(userEmail);
+        sendFraudEmail(userEmail);
+      } else {
+        sendRegularEmail(userEmail);
       }
     } catch (error) {
       console.error("Error sending transaction:", error);
-      // Handle error cases here
     }
   };
 

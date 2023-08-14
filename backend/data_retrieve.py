@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 import numpy as np
 from keras.models import load_model
-
+import sympy
 
 def get_wallet_details(wallet_address):
     # Rinkeby Etherscan API endpoint for transaction list
@@ -59,7 +59,7 @@ def get_wallet_details(wallet_address):
     df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s', errors='coerce')
 
     # Convert 'value' column to integers
-    df['value'] = df['value'].astype('int64')
+    df['value'] = df['value'].apply(sympy.Integer)
 
     # Check the actual column names in the DataFrame
     # print(df.columns)
