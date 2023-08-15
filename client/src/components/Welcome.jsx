@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
@@ -22,8 +22,8 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 );
 
 const Welcome = ({ userEmail }) => {
-  const { currentAccount, connectWallet, handleChange, sendTransaction, formData, isLoading } = useContext(TransactionContext);
-
+  const { currentAccount, connectWallet, handleChange, sendTransaction, formData } = useContext(TransactionContext);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     // Print the user's email address in the console
     console.log("User email:", userEmail);
@@ -70,6 +70,7 @@ const Welcome = ({ userEmail }) => {
 
     // Call the API to get wallet details using currentAccount
     try {
+      setIsLoading(true);
       await sendTransaction(); // Wait for sendTransaction() to complete before moving to the next line
 
       console.log("Your email address is: ", userEmail);
@@ -85,6 +86,8 @@ const Welcome = ({ userEmail }) => {
       }
     } catch (error) {
       console.error("Error sending transaction:", error);
+    } finally {
+      setIsLoading(false); // Set isLoading back to false after the asynchronous code is done
     }
   };
 

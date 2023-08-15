@@ -18,7 +18,6 @@ const createEthereumContract = () => {
 export const TransactionsProvider = ({ children }) => {
   const [formData, setformData] = useState({ addressTo: "", amount: "", keyword: "", message: "" });
   const [currentAccount, setCurrentAccount] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [transactionCount, setTransactionCount] = useState(localStorage.getItem("transactionCount"));
   const [transactions, setTransactions] = useState([]);
 
@@ -120,11 +119,9 @@ export const TransactionsProvider = ({ children }) => {
 
         const transactionHash = await transactionsContract.addToBlockchain(addressTo, parsedAmount, message, keyword);
 
-        setIsLoading(true);
         console.log(`Loading - ${transactionHash.hash}`);
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
-        setIsLoading(false);
 
         const transactionsCount = await transactionsContract.getTransactionCount();
 
@@ -153,7 +150,6 @@ export const TransactionsProvider = ({ children }) => {
         connectWallet,
         transactions,
         currentAccount,
-        isLoading,
         sendTransaction,
         handleChange,
         formData,
