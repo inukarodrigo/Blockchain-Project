@@ -30,35 +30,45 @@ const Welcome = ({ userEmail }) => {
   }, [userEmail]);
 
   const sendFraudEmail = (addressTo) => {
-    console.log("User email in sendEmail:", addressTo);
-    const templateParams = {
-      to_email: addressTo,
-    };
+    console.log("User email in sendFraudEmail:", addressTo);
 
-    emailjs
-      .send("service_0nzepqg", "template_r3t69sp", templateParams, "hwW9qbjSy8jlWyvF1")
-      .then((result) => {
-        console.log(result.text);
-      })
-      .catch((error) => {
-        console.log(error.text);
-      });
+    return new Promise((resolve, reject) => {
+      const templateParams = {
+        to_email: addressTo,
+      };
+
+      emailjs
+        .send("service_0nzepqg", "template_r3t69sp", templateParams, "hwW9qbjSy8jlWyvF1")
+        .then((result) => {
+          console.log(result.text);
+          resolve(); // Resolve the promise when email sending is successful
+        })
+        .catch((error) => {
+          console.log(error.text);
+          reject(error); // Reject the promise on error
+        });
+    });
   };
 
   const sendRegularEmail = (addressTo) => {
-    console.log("User email in sendEmail:", addressTo);
-    const templateParams = {
-      to_email: addressTo,
-    };
+    console.log("User email in sendRegularEmail:", addressTo);
 
-    emailjs
-      .send("service_0nzepqg", "template_r6iz22i", templateParams, "hwW9qbjSy8jlWyvF1")
-      .then((result) => {
-        console.log(result.text);
-      })
-      .catch((error) => {
-        console.log(error.text);
-      });
+    return new Promise((resolve, reject) => {
+      const templateParams = {
+        to_email: addressTo,
+      };
+
+      emailjs
+        .send("service_0nzepqg", "template_r6iz22i", templateParams, "hwW9qbjSy8jlWyvF1")
+        .then((result) => {
+          console.log(result.text);
+          resolve(); // Resolve the promise when email sending is successful
+        })
+        .catch((error) => {
+          console.log(error.text);
+          reject(error); // Reject the promise on error
+        });
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -78,12 +88,20 @@ const Welcome = ({ userEmail }) => {
       // The value here will not get printed out since sendTransaction() reload the page at the end
       // But the values will get displayed in the console
       console.log(response.data);
+
+      let emailPromise;
       // Email has to be sent based on the output (1 or 0) of the model
       if (response.data === 1) {
-        sendFraudEmail(userEmail);
+        emailPromise = sendFraudEmail(userEmail);
       } else {
-        sendRegularEmail(userEmail);
+        emailPromise = sendRegularEmail(userEmail);
       }
+
+      // Wait for both email sending promises to resolve before reloading the page
+      await Promise.all([emailPromise, emailPromise]);
+
+      // Reload the page
+      window.location.reload();
     } catch (error) {
       console.error("Error sending transaction:", error);
     } finally {
